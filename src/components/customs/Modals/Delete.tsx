@@ -10,21 +10,39 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Trash2 } from "lucide-react";
+import useDatabase from "@/hooks/useDatabase";
+import { DB_LOCATION } from "@/lib/loc/loc";
+import { useState } from "react";
 
-const Delete = () => {
+interface Props {
+  id: string;
+  productName: string;
+}
+
+const Delete = ({ id, productName }: Props) => {
+  const { deleteData } = useDatabase();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const deleteHandler = async () => {
+    await deleteData(`${DB_LOCATION.productList}/${id}`);
+    setIsOpen(false);
+  };
+
   return (
-    <TooltipWrapper text="Delete Product" side="top">
-      <Dialog>
+    <TooltipWrapper text="Delete" side="top">
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
-          <Trash2 className="product_icon hover:text-destructive" />
+          <Button variant="outline" size="sm">
+            <Trash2 className="w-4" />
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle className="font-archivo text-madison">
-              Delete Hawaiin Pizza
+              Delete {productName}
             </DialogTitle>
             <DialogDescription className="font-montserrat">
-              Are you sure to delete Hawaiin Pizza?
+              Are you sure to delete {productName}?
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="sm:justify-end mt-2">
@@ -33,7 +51,7 @@ const Delete = () => {
                 Close
               </Button>
             </DialogClose>
-            <Button type="button" variant="destructive">
+            <Button onClick={deleteHandler} type="button" variant="destructive">
               Delete
             </Button>
           </DialogFooter>

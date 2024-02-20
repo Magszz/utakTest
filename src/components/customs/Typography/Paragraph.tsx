@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
-const paragraphVariants = cva("font-quicksand", {
+const paragraphVariants = cva("font-montserrat", {
   variants: {
     fontSize: {
       xl: "xs:text-sm sm:text-md md:text-lg lg:text-xl",

@@ -28,7 +28,7 @@ TooltipContent.displayName = TooltipPrimitive.Content.displayName;
 interface Props {
   children: React.ReactNode;
   text: string;
-  side?: "top" | "right" | "bottom" | "top";
+  side?: "top" | "right" | "bottom" | "left";
 }
 
 const TooltipWrapper = ({ children, text, side }: Props) => {

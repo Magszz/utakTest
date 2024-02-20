@@ -78,8 +78,8 @@
 }
 
 @layer components {
-  .create_product {
-    @apply fixed bottom-10 right-8 !w-10 !h-10 !rounded-full  md:right-0 md:relative md:bottom-0 md:!h-9 md:!w-fit md:!rounded-md;
+  .create_form {
+    @apply [&>div>input]:text-xs [&>div]:px-1 flex-1 overflow-y-auto;
   }
 
   .product_icon {

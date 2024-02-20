@@ -18,4 +18,14 @@ export { default as Product } from "./customs/Product/Product";
 
 // * MODAL
 export { default as Delete } from "./customs/Modals/Delete";
-export { default as ViewEdit } from "./customs/Modals/ViewEdit";
+export { default as Edit } from "./customs/Modals/Edit";
+export { default as Create } from "./customs/Modals/Create";
+export { default as Alert } from "./customs/Alert/Alert";
+
+// * FORM FIELDS
+export { default as Search } from "./customs/Formfields/Search";
+export { default as Filter } from "./customs/Filter/Filter";
+
+// * EMPTY & LOADING
+export { default as Empty } from "./customs/Empty/Empty";
+export { default as Loading } from "./customs/Loading/Loading";

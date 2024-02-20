@@ -1,57 +1,65 @@
-// interface Props <T> {
-//     name: string;
-//     description: string;
-//     price: number;
-//     cost: number;
-//     category: string;
-//     stockAmount: number;
-//     variants: T[];
-//     image: string;
-//     }
+import Box from "@/assets/icons/Box";
+import { Delete, Edit, Flex, Paragraph } from "@/components";
+import { TableRow, TableCell } from "@/components/ui/table";
+import { TProduct } from "@/lib/typings/Typings";
 
-import { Paragraph, Subheading, Delete, ViewEdit } from "@/components";
-import Flex from "../Layouts/Flex";
-import Heading from "../Typography/Heading";
+const Product = ({
+  category,
+  id,
+  options,
+  price,
+  productName,
+  stockAmount,
+  image,
+  cost,
+  dateCreated,
+}: TProduct) => {
+  const optionList = options.split(",");
 
-const Product = () => {
   return (
-    <div className="w-full relative bg-white border rounded-xl shadow h-56 p-4">
-      <Flex variant="betweenCentered">
-        {/*  */}
-        <div className="w-full max-w-[70%]">
-          <Heading
-            type="h4"
-            className="w-full  truncate text-madison font-archivo font-bold"
-          >
-            Hawaiin Pizza
-          </Heading>
-          <Subheading fontSize="sm" className="font-semibold text-gray-500">
-            Pizza
-          </Subheading>
-        </div>
-
-        {/* OPTIONS */}
-        <Flex variant="endCentered" className="gap-2">
-          <ViewEdit />
-          <Delete />
+    <TableRow>
+      <TableCell>
+        <Flex className="gap-6 w-full" variant="startCentered">
+          {image ? (
+            <img
+              src={image}
+              alt="Product Image"
+              className="w-12 h-12 object-cover rounded-full"
+            />
+          ) : (
+            <div className="rounded-full">
+              <Box className="w-12 h-12 fill-primary" />
+            </div>
+          )}
+          <Paragraph fontSize="md" className="w-full truncate">
+            {productName}
+          </Paragraph>
         </Flex>
-      </Flex>
-
-      {/*  */}
-      <Flex variant="betweenEnd" className="h-[calc(100%-52px)]">
-        <Paragraph
-          className="mb-2 font-archivo text-[#f15a22] !text-2xl"
-          fontSize="xl"
-        >
-          ₱200.00
-        </Paragraph>
-        <img
-          src="https://www.kingarthurbaking.com/sites/default/files/styles/featured_image/public/2020-03/hawaiian-pizza.jpg?itok=a1-_QjRA"
-          alt="Product Image"
-          className="w-40 rounded-md"
-        />
-      </Flex>
-    </div>
+      </TableCell>
+      <TableCell>{category}</TableCell>
+      <TableCell>{price}</TableCell>
+      <TableCell>{cost}</TableCell>
+      <TableCell>{stockAmount}</TableCell>
+      <TableCell>{dateCreated}</TableCell>
+      <TableCell>
+        <Flex variant="startCentered" className="gap-1 flex-wrap">
+          {optionList.map((option: string, idx: number) => (
+            <span
+              key={idx}
+              className="p-1 px-2 rounded-2xl border !text-xs font-montserrat uppercase"
+            >
+              {option}
+            </span>
+          ))}
+        </Flex>
+      </TableCell>
+      <TableCell>
+        <Flex variant="startCentered" className="w-full gap-2">
+          <Edit />
+          <Delete id={id} productName={productName} />
+        </Flex>
+      </TableCell>
+    </TableRow>
   );
 };
 

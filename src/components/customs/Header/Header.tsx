@@ -1,23 +1,36 @@
-import { Flex, Heading, Subheading } from "@/components";
+import { Create, Flex, Heading, Subheading } from "@/components";
 import { Button } from "@/components/ui/button";
-import { SquarePen } from "lucide-react";
+import { Excel } from "@/assets/icons";
+import { TooltipWrapper } from "@/components/ui/tooltip";
 
 const Header = () => {
   return (
-    <Flex variant="betweenCentered">
-      <div>
-        <Heading className="!text-lightBlack/85 mb-1 font-semibold" type="h3">
-          Point of Sale
-        </Heading>
-        <Subheading className="text-gray-600" fontSize="sm">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-        </Subheading>
-      </div>
-      <Button className="create_product" size="sm">
-        <SquarePen className="text-white md:hidden" />
-        <span className="hidden md:block">Create Product</span>
-      </Button>
-    </Flex>
+    <div className="p-4">
+      <Flex variant="betweenCentered" className="flex-col sm:flex-row">
+        {/* Header text */}
+        <div className="w-full sm:w-1/2">
+          <Heading className="!text-lightBlack/85 mb-1 font-semibold" type="h3">
+            Product List
+          </Heading>
+          <Subheading className="text-gray-600" fontSize="sm">
+            Manage your products
+          </Subheading>
+        </div>
+
+        {/* Header Buttons */}
+        <Flex
+          variant="endCentered"
+          className="gap-2 mt-2 sm:mt-0 w-full sm:w-1/2"
+        >
+          <TooltipWrapper side="left" text="Export to Excel">
+            <Button variant="outline" size="sm">
+              <Excel className="w-4" />
+            </Button>
+          </TooltipWrapper>
+          <Create />
+        </Flex>
+      </Flex>
+    </div>
   );
 };
 
