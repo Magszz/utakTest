@@ -39,3 +39,8 @@ export interface TProduct {
   image: string;
   dateCreated: string;
 }
+
+export interface ImgInfo {
+  fileName: string;
+  file: File;
+}

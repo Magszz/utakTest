@@ -24,7 +24,7 @@ const Delete = ({ id, productName }: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const deleteHandler = async () => {
-    await deleteData(`${DB_LOCATION.productList}/${id}`);
+    await deleteData(`${DB_LOCATION.products}/${id}`);
     setIsOpen(false);
   };
 

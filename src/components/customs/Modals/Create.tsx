@@ -1,4 +1,4 @@
-import { Flex, Paragraph } from "@/components";
+import { Flex, Paragraph, Select } from "@/components";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -14,23 +14,31 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { PlusCircle, NotebookPen } from "lucide-react";
-import { FormEvent, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import _ from "lodash";
 import useDatabase from "@/hooks/useDatabase";
 import { formDefaultValues } from "@/lib/static/defaultValues";
-import { FormStatus } from "@/lib/typings/Typings";
+import { FormStatus, ImgInfo } from "@/lib/typings/Typings";
 import { allValuesHaveLength } from "@/lib/helpers/stringHelpers";
 import { DB_LOCATION } from "@/lib/loc/loc";
 import dayjs from "dayjs";
+import { CATEGORIES, VALID_IMG_TYPES } from "@/lib/constant";
+import { useToast } from "@/components/ui/use-toast";
+import { notifLang } from "@/lib/lang/notifLang";
+import useStorage from "@/hooks/useStorage";
 
 const Create = () => {
+  const { toast } = useToast();
   const formRef = useRef<HTMLFormElement>(null);
   const [formStatus, setFormStatus] = useState<FormStatus>({
     loading: false,
     open: false,
     disabled: true,
   });
+
+  const [imgInfo, setImgInfo] = useState<ImgInfo>();
   const { saveData } = useDatabase();
+  const { uploadImage } = useStorage();
 
   // * GET ALL INPUT VALUES FROM FORM
   const formValues = () => {
@@ -53,14 +61,22 @@ const Create = () => {
   const formSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!formRef?.current) return;
-    const dateNow = dayjs().format("MMM D, YYYY");
-    setFormStatus({ ...formStatus, loading: true });
 
+    setFormStatus({ ...formStatus, loading: true });
+    let imgURL;
+    const dateNow = dayjs().format("MMM D, YYYY");
     const data = formValues() || formDefaultValues;
 
-    const response = await saveData(DB_LOCATION.productList, {
+    if (imgInfo?.file) {
+      imgURL = await uploadImage(imgInfo.file, imgInfo.fileName);
+    }
+
+    if (!imgURL) return;
+
+    const response = await saveData(DB_LOCATION.products, {
       ...data,
       dateCreated: dateNow,
+      image: imgURL,
     });
 
     if (response) {
@@ -75,6 +91,23 @@ const Create = () => {
 
     setFormStatus({ ...formStatus, disabled: !allValuesHaveLength(data) });
   }, 250);
+
+  // * VALIDATE IMAGE TYPE & SETTING OF IMG INFO TO BE UPLOAD TO STORAGE
+  const uploadImg = (e: ChangeEvent<HTMLInputElement>) => {
+    const target = e?.target?.files?.[0];
+
+    if (!VALID_IMG_TYPES.includes(target?.type || "") || !target) {
+      toast({
+        variant: "destructive",
+        ...notifLang.uploadImg.error,
+      });
+      return;
+    }
+    setImgInfo({
+      fileName: target.name,
+      file: target,
+    });
+  };
 
   return (
     <Dialog
@@ -121,17 +154,19 @@ const Create = () => {
                   name="productName"
                 />
               </div>
+
               <div className="mb-2">
                 <Label required htmlFor="category">
                   Product Category
                 </Label>
-                <Input
-                  type="text"
-                  placeholder="Enter product category"
-                  id="category"
+                <Select
                   name="category"
+                  id="category"
+                  placeholder="Select product category"
+                  options={CATEGORIES}
                 />
               </div>
+
               <div className="mb-2">
                 <Label required htmlFor="price">
                   Product Price
@@ -185,11 +220,16 @@ const Create = () => {
               </div>
               <div className="mb-2">
                 <Label htmlFor="image">Product Image</Label>
+                <Paragraph fontSize="xs" className="mb-2">
+                  (Supported types:{" "}
+                  <span className="font-semibold">PNG, JPG, JPEG</span>)
+                </Paragraph>
                 <Input
                   accept="image/jpeg, image/png, image/jpg"
                   type="file"
                   id="image"
                   name="image"
+                  onChange={uploadImg}
                 />
               </div>
             </div>

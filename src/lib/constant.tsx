@@ -1,5 +1,6 @@
 import { Category, SortBy, Column } from "./typings/Typings";
 
+export const VALID_IMG_TYPES = ["image/jpeg", "image/png", "image/jpg"];
 export const CATEGORIES: Category[] = [
   {
     name: "All Items",
@@ -7,23 +8,27 @@ export const CATEGORIES: Category[] = [
   },
   {
     name: "Salads",
-    value: "salads",
+    value: "salad",
   },
   {
     name: "Burgers",
-    value: "burgers",
+    value: "burger",
   },
   {
     name: "Sides",
-    value: "sides",
+    value: "side",
+  },
+  {
+    name: "Pizza",
+    value: "pizza",
   },
   {
     name: "Beverages",
-    value: "beverages",
+    value: "beverage",
   },
   {
     name: "Desserts",
-    value: "desserts",
+    value: "dessert",
   },
 ];
 

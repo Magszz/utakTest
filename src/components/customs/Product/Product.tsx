@@ -14,7 +14,7 @@ const Product = ({
   cost,
   dateCreated,
 }: TProduct) => {
-  const optionList = options.split(",");
+  const optionList = options?.split(",");
 
   return (
     <TableRow>
@@ -43,7 +43,7 @@ const Product = ({
       <TableCell>{dateCreated}</TableCell>
       <TableCell>
         <Flex variant="startCentered" className="gap-1 flex-wrap">
-          {optionList.map((option: string, idx: number) => (
+          {optionList?.map((option: string, idx: number) => (
             <span
               key={idx}
               className="p-1 px-2 rounded-2xl border !text-xs font-montserrat uppercase"

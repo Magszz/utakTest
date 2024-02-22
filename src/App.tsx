@@ -29,7 +29,7 @@ const App = () => {
   const { data, getData, loading } = useDatabase();
 
   useEffect(() => {
-    getData(DB_LOCATION.productList);
+    getData(DB_LOCATION.products);
   }, []);
 
   return (
@@ -43,7 +43,7 @@ const App = () => {
           <div className="w-full">
             <Search
               placeholder="Search for a product"
-              className="w-[65%] [&>input]:placeholder:font-montserrat"
+              className="!w-[60%] [&>input]:placeholder:font-montserrat"
             />
           </div>
           <Flex variant="centered" className="gap-2 w-fit">

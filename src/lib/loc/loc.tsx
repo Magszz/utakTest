@@ -1,3 +1,7 @@
 export const DB_LOCATION = {
-  productList: "products/list",
+  products: "products",
+};
+
+export const STORAGE_LOCATION = {
+  productImg: "productImgs",
 };
