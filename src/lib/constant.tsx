@@ -1,21 +1,22 @@
 import { Category, SortBy, Column } from "./typings/Typings";
 
 export const VALID_IMG_TYPES = ["image/jpeg", "image/png", "image/jpg"];
+export const COLSPAN = 9;
 export const CATEGORIES: Category[] = [
   {
     name: "All Items",
     value: "all",
   },
   {
-    name: "Salads",
+    name: "Salad",
     value: "salad",
   },
   {
-    name: "Burgers",
+    name: "Burger",
     value: "burger",
   },
   {
-    name: "Sides",
+    name: "Side",
     value: "side",
   },
   {
@@ -23,11 +24,11 @@ export const CATEGORIES: Category[] = [
     value: "pizza",
   },
   {
-    name: "Beverages",
+    name: "Beverage",
     value: "beverage",
   },
   {
-    name: "Desserts",
+    name: "Dessert",
     value: "dessert",
   },
 ];
@@ -55,6 +56,10 @@ export const TABLE_COLUMNS: Column[] = [
   },
   {
     name: "Date Created",
+    className: "",
+  },
+  {
+    name: "Last Modified",
     className: "",
   },
   {

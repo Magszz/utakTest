@@ -26,6 +26,7 @@ import { CATEGORIES, VALID_IMG_TYPES } from "@/lib/constant";
 import { useToast } from "@/components/ui/use-toast";
 import { notifLang } from "@/lib/lang/notifLang";
 import useStorage from "@/hooks/useStorage";
+import useGetFormValues from "@/hooks/useGetFormValues";
 
 const Create = () => {
   const { toast } = useToast();
@@ -39,23 +40,7 @@ const Create = () => {
   const [imgInfo, setImgInfo] = useState<ImgInfo>();
   const { saveData } = useDatabase();
   const { uploadImage } = useStorage();
-
-  // * GET ALL INPUT VALUES FROM FORM
-  const formValues = () => {
-    if (!formRef?.current) return;
-
-    const { productName, category, price, cost, stockAmount, options } =
-      formRef.current || {};
-
-    return {
-      productName: productName.value,
-      category: category.value,
-      price: price.value,
-      cost: cost.value,
-      stockAmount: stockAmount.value,
-      options: options.value,
-    };
-  };
+  const { productForm } = useGetFormValues();
 
   // * SUBMIT FORM
   const formSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -65,17 +50,18 @@ const Create = () => {
     setFormStatus({ ...formStatus, loading: true });
     let imgURL;
     const dateNow = dayjs().format("MMM D, YYYY");
-    const data = formValues() || formDefaultValues;
+    const data = productForm(formRef) || formDefaultValues;
 
     if (imgInfo?.file) {
       imgURL = await uploadImage(imgInfo.file, imgInfo.fileName);
     }
 
-    if (!imgURL) return;
+    if (!imgURL && !imgInfo?.file) return;
 
     const response = await saveData(DB_LOCATION.products, {
       ...data,
       dateCreated: dateNow,
+      lastModified: dateNow,
       image: imgURL,
     });
 
@@ -87,7 +73,7 @@ const Create = () => {
 
   // * VALIDATE FORM VALUES | THIS WILL CHECK IF THE USER FILL ALL THE REQUIRED FIELDS
   const formChange = _.debounce(() => {
-    const data = formValues() || formDefaultValues;
+    const data = productForm(formRef) || formDefaultValues;
 
     setFormStatus({ ...formStatus, disabled: !allValuesHaveLength(data) });
   }, 250);

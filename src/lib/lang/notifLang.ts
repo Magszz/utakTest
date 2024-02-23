@@ -1,7 +1,7 @@
 import { NotifLang } from "../typings/Typings";
 
 export const notifLang: NotifLang<
-  "create" | "delete" | "fetch" | "uploadImg" | "submitImg"
+  "create" | "delete" | "fetch" | "uploadImg" | "submitImg" | "update"
 > = {
   create: {
     success: {
@@ -18,6 +18,17 @@ export const notifLang: NotifLang<
     success: {
       title: "Successfully deleted",
       description: "Selected product has been successfully deleted!",
+    },
+    error: {
+      title: "Something went wrong.",
+      description:
+        "The application encountered an unexpected error while processing your request. Please try again!",
+    },
+  },
+  update: {
+    success: {
+      title: "Successfully updated",
+      description: "Selected product has been successfully updated!",
     },
     error: {
       title: "Something went wrong.",

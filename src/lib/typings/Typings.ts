@@ -38,6 +38,7 @@ export interface TProduct {
   stockAmount: string;
   image: string;
   dateCreated: string;
+  lastModified: string;
 }
 
 export interface ImgInfo {

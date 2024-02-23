@@ -1,5 +1,5 @@
 import Box from "@/assets/icons/Box";
-import { Delete, Edit, Flex, Paragraph } from "@/components";
+import { Delete, Update, Flex, Paragraph } from "@/components";
 import { TableRow, TableCell } from "@/components/ui/table";
 import { TProduct } from "@/lib/typings/Typings";
 
@@ -13,12 +13,25 @@ const Product = ({
   image,
   cost,
   dateCreated,
+  lastModified,
 }: TProduct) => {
   const optionList = options?.split(",");
+  const product: TProduct = {
+    category,
+    lastModified,
+    id,
+    options,
+    price,
+    productName,
+    stockAmount,
+    image,
+    cost,
+    dateCreated,
+  };
 
   return (
     <TableRow>
-      <TableCell>
+      <TableCell title={productName}>
         <Flex className="gap-6 w-full" variant="startCentered">
           {image ? (
             <img
@@ -36,16 +49,17 @@ const Product = ({
           </Paragraph>
         </Flex>
       </TableCell>
-      <TableCell>{category}</TableCell>
+      <TableCell className="uppercase font-semibold">{category}</TableCell>
       <TableCell>{price}</TableCell>
       <TableCell>{cost}</TableCell>
       <TableCell>{stockAmount}</TableCell>
       <TableCell>{dateCreated}</TableCell>
+      <TableCell>{lastModified}</TableCell>
       <TableCell>
         <Flex variant="startCentered" className="gap-1 flex-wrap">
           {optionList?.map((option: string, idx: number) => (
             <span
-              key={idx}
+              key={`option-${idx}`}
               className="p-1 px-2 rounded-2xl border !text-xs font-montserrat uppercase"
             >
               {option}
@@ -55,7 +69,7 @@ const Product = ({
       </TableCell>
       <TableCell>
         <Flex variant="startCentered" className="w-full gap-2">
-          <Edit />
+          <Update product={product} />
           <Delete id={id} productName={productName} />
         </Flex>
       </TableCell>

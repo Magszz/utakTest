@@ -5,6 +5,7 @@ import {
   push,
   onValue,
   remove,
+  update,
 } from "firebase/database";
 import { app } from "@/lib/firebase/firebase";
 import { notifLang } from "@/lib/lang/notifLang";
@@ -73,7 +74,6 @@ const useDatabase = () => {
         ...notifLang.delete.success,
       });
     } catch (err) {
-      console.log(err);
       toast({
         variant: "destructive",
         ...notifLang.delete.error,
@@ -81,7 +81,29 @@ const useDatabase = () => {
     }
   };
 
-  return { saveData, data, getData, loading, deleteData };
+  const updateData = async <T extends object>(
+    location: string,
+    data: T
+  ): Promise<boolean> => {
+    const db = getDatabase(app);
+    const dbRef = ref(db, location);
+
+    try {
+      await update(dbRef, data);
+      toast({
+        ...notifLang.update.success,
+      });
+      return true;
+    } catch {
+      toast({
+        variant: "destructive",
+        ...notifLang.update.error,
+      });
+      return false;
+    }
+  };
+
+  return { saveData, data, getData, loading, deleteData, updateData };
 };
 
 export default useDatabase;

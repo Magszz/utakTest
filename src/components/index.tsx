@@ -18,7 +18,7 @@ export { default as Product } from "./customs/Product/Product";
 
 // * MODAL
 export { default as Delete } from "./customs/Modals/Delete";
-export { default as Edit } from "./customs/Modals/Edit";
+export { default as Update } from "./customs/Modals/Update";
 export { default as Create } from "./customs/Modals/Create";
 export { default as Alert } from "./customs/Alert/Alert";
 
