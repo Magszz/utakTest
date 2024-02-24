@@ -1,9 +1,11 @@
 import { Input } from "@/components/ui/input";
 import { Search as SearchIcon } from "lucide-react";
+import { ChangeEvent } from "react";
 
 interface Props {
   className?: string;
   placeholder?: string;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Search = ({ className, ...props }: Props) => {

@@ -2,6 +2,8 @@ import Box from "@/assets/icons/Box";
 import { Delete, Update, Flex, Paragraph } from "@/components";
 import { TableRow, TableCell } from "@/components/ui/table";
 import { TProduct } from "@/lib/typings/Typings";
+import dayjs from "dayjs";
+import LocalizedFormat from "dayjs/plugin/localizedFormat";
 
 const Product = ({
   category,
@@ -15,6 +17,7 @@ const Product = ({
   dateCreated,
   lastModified,
 }: TProduct) => {
+  dayjs.extend(LocalizedFormat);
   const optionList = options?.split(",");
   const product: TProduct = {
     category,
@@ -31,7 +34,7 @@ const Product = ({
 
   return (
     <TableRow>
-      <TableCell title={productName}>
+      <TableCell title={productName?.toUpperCase()}>
         <Flex className="gap-6 w-full" variant="startCentered">
           {image ? (
             <img
@@ -45,7 +48,7 @@ const Product = ({
             </div>
           )}
           <Paragraph fontSize="md" className="w-full truncate">
-            {productName}
+            {productName?.toUpperCase()}
           </Paragraph>
         </Flex>
       </TableCell>
@@ -53,8 +56,8 @@ const Product = ({
       <TableCell>{price}</TableCell>
       <TableCell>{cost}</TableCell>
       <TableCell>{stockAmount}</TableCell>
-      <TableCell>{dateCreated}</TableCell>
-      <TableCell>{lastModified}</TableCell>
+      <TableCell>{dayjs(dateCreated).format("L LT")}</TableCell>
+      <TableCell>{dayjs(lastModified).format("L LT")}</TableCell>
       <TableCell>
         <Flex variant="startCentered" className="gap-1 flex-wrap">
           {optionList?.map((option: string, idx: number) => (

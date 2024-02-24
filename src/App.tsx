@@ -22,15 +22,40 @@ import { Toaster } from "@/components/ui/toaster";
 import { TABLE_COLUMNS } from "./lib/constant";
 import { Column, TProduct } from "./lib/typings/Typings";
 import useDatabase from "./hooks/useDatabase";
-import { useEffect } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { DB_LOCATION } from "./lib/loc/loc";
+import _ from "lodash";
 
 const App = () => {
+  const [filter, setFilter] = useState("all");
   const { data, getData, loading } = useDatabase();
 
   useEffect(() => {
     getData(DB_LOCATION.products);
   }, []);
+
+  // * SEARCH FOR PRODUCT
+  const searchProduct = _.debounce((e: ChangeEvent<HTMLInputElement>) => {
+    const filterBy = {
+      orderBy: "productName",
+      equalTo: e.target.value.toLowerCase(),
+    };
+    getData(DB_LOCATION.products, filterBy);
+  }, 250);
+
+  // * FILTER CATEGORY OF PRODUCT
+  const filterCategory = (val: string) => {
+    setFilter(val);
+    if (val === "all") {
+      getData(DB_LOCATION.products);
+    } else {
+      const filterBy = {
+        orderBy: "category",
+        equalTo: val,
+      };
+      getData(DB_LOCATION.products, filterBy);
+    }
+  };
 
   return (
     <div className="w-full px-8 py-4 relative">
@@ -42,13 +67,14 @@ const App = () => {
         <Grid className="py-8 px-4 border-b gap-4 justify-items-end">
           <div className="w-full">
             <Search
+              onChange={searchProduct}
               placeholder="Search for a product"
               className="!w-[60%] [&>input]:placeholder:font-montserrat"
             />
           </div>
           <Flex variant="centered" className="gap-2 w-fit">
             <Sort />
-            <Filter />
+            <Filter value={filter} onValueChange={filterCategory} />
           </Flex>
         </Grid>
 

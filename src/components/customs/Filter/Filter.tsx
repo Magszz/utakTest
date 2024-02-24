@@ -12,18 +12,12 @@ import { Filter as FilterIcon } from "lucide-react";
 
 import { Category } from "@/lib/typings/Typings";
 import { CATEGORIES } from "@/lib/constant";
+interface Props {
+  onValueChange: (val: string) => void;
+  value: string;
+}
 
-import { useState } from "react";
-
-const Filter = () => {
-  const filteredBy = sessionStorage.getItem("filteredBy") || "all";
-  const [filterVal, setFilterVal] = useState<string>(filteredBy);
-
-  const setFilter = (value: string) => {
-    setFilterVal(value);
-    sessionStorage.setItem("filteredBy", value);
-  };
-
+const Filter = ({ value, onValueChange }: Props) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -35,7 +29,7 @@ const Filter = () => {
       <DropdownMenuContent className="w-full max-w-[400px]">
         <DropdownMenuLabel>Product Types</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuRadioGroup value={filterVal} onValueChange={setFilter}>
+        <DropdownMenuRadioGroup value={value} onValueChange={onValueChange}>
           {CATEGORIES?.map((category: Category) => (
             <DropdownMenuRadioItem key={category.value} value={category.value}>
               {category.name}

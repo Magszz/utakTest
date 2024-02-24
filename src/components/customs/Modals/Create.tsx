@@ -48,18 +48,19 @@ const Create = () => {
     if (!formRef?.current) return;
 
     setFormStatus({ ...formStatus, loading: true });
-    let imgURL;
-    const dateNow = dayjs().format("MMM D, YYYY");
+    let imgURL: string | boolean = "";
+    const dateNow = dayjs().valueOf();
     const data = productForm(formRef) || formDefaultValues;
 
     if (imgInfo?.file) {
       imgURL = await uploadImage(imgInfo.file, imgInfo.fileName);
     }
 
-    if (!imgURL && !imgInfo?.file) return;
+    if (!imgURL && imgInfo?.file) return;
 
     const response = await saveData(DB_LOCATION.products, {
       ...data,
+      productName: data?.productName?.toLowerCase(),
       dateCreated: dateNow,
       lastModified: dateNow,
       image: imgURL,

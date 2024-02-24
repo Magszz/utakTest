@@ -82,11 +82,12 @@ const Update = ({ product }: Props) => {
     ]);
     const isFormChanged = _.isEqual(data, productWithoutNotRequiredFields);
 
-    console.log({ data, productWithoutNotRequiredFields });
+    console.log(!imgInfo?.file);
 
     setFormStatus({
       ...formStatus,
-      disabled: !allValuesHaveLength(data) || isFormChanged,
+      disabled:
+        (!allValuesHaveLength(data) || isFormChanged) && !!imgInfo?.fileName,
     });
   }, 250);
 

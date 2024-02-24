@@ -45,3 +45,8 @@ export interface ImgInfo {
   fileName: string;
   file: File;
 }
+
+export interface Filter {
+  orderBy: string;
+  equalTo: string;
+}

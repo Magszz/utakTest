@@ -6,12 +6,18 @@ import {
   onValue,
   remove,
   update,
+  query,
+  orderByChild,
+  equalTo,
+  Query,
+  DatabaseReference,
 } from "firebase/database";
 import { app } from "@/lib/firebase/firebase";
 import { notifLang } from "@/lib/lang/notifLang";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
-import { TProduct } from "@/lib/typings/Typings";
+import { Filter, TProduct } from "@/lib/typings/Typings";
+import { defaultFilterBy } from "@/lib/static/defaultValues";
 
 const useDatabase = () => {
   const { toast } = useToast();
@@ -36,6 +42,7 @@ const useDatabase = () => {
       });
       return true;
     } catch (err) {
+      console.log(err);
       toast({
         variant: "destructive",
         ...notifLang.create.error,
@@ -44,14 +51,29 @@ const useDatabase = () => {
     }
   };
 
-  const getData = async (location: string) => {
+  const getData = async (
+    location: string,
+    filterVal: Filter = defaultFilterBy
+  ) => {
     const db = getDatabase(app);
-    const dbRef = ref(db, location);
+    let dbRef: DatabaseReference | Query = ref(db, location);
+
+    // * WILL ADD QUERIES IF filterVal HAS VALUES ( SEARCH & FILTER )
+    if (filterVal.orderBy && filterVal.equalTo) {
+      dbRef = query(
+        ref(db, location),
+        orderByChild(filterVal.orderBy),
+        equalTo(filterVal.equalTo)
+      );
+    }
 
     try {
       onValue(dbRef, (snapshot) => {
         if (snapshot.exists()) {
+          console.log(snapshot.val());
           setData(Object.values(snapshot.val()));
+        } else {
+          setData([]);
         }
         setLoading(false);
       });

@@ -12,8 +12,11 @@ import { notifLang } from "@/lib/lang/notifLang";
 const useStorage = () => {
   const { toast } = useToast();
 
-  const uploadImage = async (imgFile: File, imgName: string) => {
-    if (!imgFile) return;
+  const uploadImage = async (
+    imgFile: File,
+    imgName: string
+  ): Promise<string | boolean> => {
+    if (!imgFile && !imgName) return false;
 
     const storage = getStorage();
     const storageRef = ref(
