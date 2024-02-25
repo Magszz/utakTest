@@ -26,6 +26,7 @@ export { default as Alert } from "./customs/Alert/Alert";
 export { default as Search } from "./customs/Formfields/Search";
 export { default as Filter } from "./customs/Filter/Filter";
 export { default as Select } from "./customs/Formfields/Select";
+export { default as Sort } from "./customs/Sort/Sort";
 
 // * EMPTY & LOADING
 export { default as Empty } from "./customs/Empty/Empty";

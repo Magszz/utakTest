@@ -50,3 +50,5 @@ export interface Filter {
   orderBy: string;
   equalTo: string;
 }
+
+export type Sort = "productName" | "category" | "price" | "cost";

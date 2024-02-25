@@ -8,8 +8,8 @@ import {
   Grid,
   Empty,
   Loading,
+  Sort,
 } from "./components";
-import Sort from "./components/customs/Sort/Sort";
 import {
   TableCaption,
   TableHeader,
@@ -20,14 +20,20 @@ import {
 } from "./components/ui/table";
 import { Toaster } from "@/components/ui/toaster";
 import { TABLE_COLUMNS } from "./lib/constant";
-import { Column, TProduct } from "./lib/typings/Typings";
+import { Column, Filter as TFilter, TProduct } from "./lib/typings/Typings";
 import useDatabase from "./hooks/useDatabase";
 import { ChangeEvent, useEffect, useState } from "react";
 import { DB_LOCATION } from "./lib/loc/loc";
 import _ from "lodash";
+import { defaultFilterBy } from "./lib/static/defaultValues";
 
 const App = () => {
+  const [activeQuery, setActiveQuery] = useState<TFilter>({
+    orderBy: "",
+    equalTo: "",
+  });
   const [filter, setFilter] = useState("all");
+  const [sort, setSort] = useState<string>("default");
   const { data, getData, loading } = useDatabase();
 
   useEffect(() => {
@@ -41,20 +47,25 @@ const App = () => {
       equalTo: e.target.value.toLowerCase(),
     };
     getData(DB_LOCATION.products, filterBy);
+    setActiveQuery(filterBy);
   }, 250);
 
-  // * FILTER CATEGORY OF PRODUCT
+  // * FILTER BY CATEGORY OF PRODUCT
   const filterCategory = (val: string) => {
+    const filterBy = {
+      orderBy: "category",
+      equalTo: val,
+    };
+    const filter = val === "all" ? defaultFilterBy : filterBy;
+    setActiveQuery(filter);
     setFilter(val);
-    if (val === "all") {
-      getData(DB_LOCATION.products);
-    } else {
-      const filterBy = {
-        orderBy: "category",
-        equalTo: val,
-      };
-      getData(DB_LOCATION.products, filterBy);
-    }
+    getData(DB_LOCATION.products, filter);
+  };
+
+  // * SORT PRODUCTS
+  const sortProducts = (val: string) => {
+    getData(DB_LOCATION.products, activeQuery, val);
+    setSort(val);
   };
 
   return (
@@ -73,7 +84,7 @@ const App = () => {
             />
           </div>
           <Flex variant="centered" className="gap-2 w-fit">
-            <Sort />
+            <Sort value={sort} onValueChange={sortProducts} />
             <Filter value={filter} onValueChange={filterCategory} />
           </Flex>
         </Grid>

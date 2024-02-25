@@ -12,17 +12,12 @@ import { SORT_BY } from "@/lib/constant";
 import { SortBy } from "@/lib/typings/Typings";
 import { ArrowDownUp } from "lucide-react";
 
-import { useState } from "react";
+interface Props {
+  onValueChange: (value: string) => void;
+  value: string;
+}
 
-const Sort = () => {
-  const sortBy = sessionStorage.getItem("sortBy") || "default";
-  const [sortVal, setSortVal] = useState<string>(sortBy);
-
-  const setSort = (value: string) => {
-    setSortVal(value);
-    sessionStorage.setItem("sortBy", value);
-  };
-
+const Sort = ({ value, onValueChange }: Props) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -34,7 +29,7 @@ const Sort = () => {
       <DropdownMenuContent className="w-full max-w-[400px]">
         <DropdownMenuLabel>Product Keys</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuRadioGroup value={sortVal} onValueChange={setSort}>
+        <DropdownMenuRadioGroup value={value} onValueChange={onValueChange}>
           {SORT_BY?.map((sortBy: SortBy) => (
             <DropdownMenuRadioItem key={sortBy.value} value={sortBy.value}>
               {sortBy.name}

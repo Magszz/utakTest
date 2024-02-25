@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   getDatabase,
   ref,
@@ -16,7 +18,7 @@ import { app } from "@/lib/firebase/firebase";
 import { notifLang } from "@/lib/lang/notifLang";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
-import { Filter, TProduct } from "@/lib/typings/Typings";
+import { Filter, Sort, TProduct } from "@/lib/typings/Typings";
 import { defaultFilterBy } from "@/lib/static/defaultValues";
 
 const useDatabase = () => {
@@ -52,7 +54,8 @@ const useDatabase = () => {
 
   const getData = async (
     location: string,
-    filterVal: Filter = defaultFilterBy
+    filterVal: Filter = defaultFilterBy,
+    sortBy: string = "default"
   ) => {
     const db = getDatabase(app);
     let dbRef: DatabaseReference | Query = ref(db, location);
@@ -69,7 +72,16 @@ const useDatabase = () => {
     try {
       onValue(dbRef, (snapshot) => {
         if (snapshot.exists()) {
-          setData(Object.values(snapshot.val()));
+          if (!sortBy || sortBy === "default") {
+            setData(Object.values(snapshot.val()));
+          } else {
+            const arrData: TProduct[] = Object.values(snapshot.val());
+            const sortedData: TProduct[] = arrData.sort((a, b) =>
+              a[sortBy as Sort]?.localeCompare(b[sortBy as Sort])
+            );
+
+            setData(sortedData);
+          }
         } else {
           setData([]);
         }

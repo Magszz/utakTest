@@ -79,7 +79,7 @@ export const SORT_BY: SortBy[] = [
   },
   {
     name: "Name",
-    value: "name",
+    value: "productName",
   },
   {
     name: "Category",
