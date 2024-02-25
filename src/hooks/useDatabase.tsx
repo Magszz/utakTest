@@ -41,8 +41,7 @@ const useDatabase = () => {
         ...notifLang.create.success,
       });
       return true;
-    } catch (err) {
-      console.log(err);
+    } catch {
       toast({
         variant: "destructive",
         ...notifLang.create.error,
@@ -70,7 +69,6 @@ const useDatabase = () => {
     try {
       onValue(dbRef, (snapshot) => {
         if (snapshot.exists()) {
-          console.log(snapshot.val());
           setData(Object.values(snapshot.val()));
         } else {
           setData([]);

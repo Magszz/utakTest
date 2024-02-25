@@ -37,8 +37,8 @@ export interface TProduct {
   productName: string;
   stockAmount: string;
   image: string;
-  dateCreated: string;
-  lastModified: string;
+  dateCreated: string | number;
+  lastModified: string | number;
 }
 
 export interface ImgInfo {

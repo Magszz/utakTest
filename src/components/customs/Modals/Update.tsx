@@ -51,18 +51,20 @@ const Update = ({ product }: Props) => {
     if (!formRef?.current) return;
     setFormStatus({ ...formStatus, loading: true });
     let imgURL;
-    const dateNow = dayjs().format("MMM D, YYYY");
+    const dateNow = dayjs().valueOf();
     const data = productForm(formRef) || formDefaultValues;
 
     if (imgInfo?.file) {
       imgURL = await uploadImage(imgInfo.file, imgInfo.fileName);
     }
+
     if (!imgURL && imgInfo?.file) return;
 
     const response = await updateData(`${DB_LOCATION.products}/${product.id}`, {
       ...data,
       lastModified: dateNow,
       image: imgURL || product.image,
+      category: data.category || product.category,
     });
 
     if (response) {
@@ -81,8 +83,6 @@ const Update = ({ product }: Props) => {
       "lastModified",
     ]);
     const isFormChanged = _.isEqual(data, productWithoutNotRequiredFields);
-
-    console.log(!imgInfo?.file);
 
     setFormStatus({
       ...formStatus,
