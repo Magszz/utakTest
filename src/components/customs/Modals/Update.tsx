@@ -72,7 +72,7 @@ const Update = ({ product }: Props) => {
     });
 
     if (response) {
-      setFormStatus({ ...formStatus, open: false, disabled: true });
+      return setFormStatus({ ...formStatus, open: false, disabled: true });
     }
 
     setFormStatus({ ...formStatus, loading: false });
@@ -81,6 +81,8 @@ const Update = ({ product }: Props) => {
   // * VALIDATE FORM VALUES | THIS WILL CHECK IF THE USER FILL ALL THE REQUIRED FIELDS & ANY VALUES ARE CHANGED
   const formChange = _.debounce(() => {
     const data = productForm(formRef) || formDefaultValues;
+
+    console.log({ data });
 
     const productWithoutNotRequiredFields = _.omit(product, [
       "image",

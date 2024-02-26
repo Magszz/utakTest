@@ -73,6 +73,7 @@ const Create = () => {
     if (response) {
       formRef?.current.reset();
       setFormStatus({ ...formStatus, open: false, disabled: true });
+      return;
     }
 
     setFormStatus({ ...formStatus, loading: false });
