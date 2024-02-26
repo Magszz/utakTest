@@ -57,9 +57,11 @@ const Update = ({ product }: Props) => {
     const data = productForm(formRef) || formDefaultValues;
 
     if (imgInfo?.file) {
-      imgURL = await uploadImage(imgInfo.file, imgInfo.fileName);
+      imgURL = await uploadImage(imgInfo.file, imgInfo.fileName || "");
     }
 
+    // * THIS WILL CHECK IF THERE'S AN ERROR ON UPLOADING AN IMG TO STORAGE
+    // * RETURN IS HAS
     if (!imgURL && imgInfo?.file) return;
 
     const response = await updateData(`${DB_LOCATION.products}/${product.id}`, {
@@ -72,6 +74,8 @@ const Update = ({ product }: Props) => {
     if (response) {
       setFormStatus({ ...formStatus, open: false, disabled: true });
     }
+
+    setFormStatus({ ...formStatus, loading: false });
   };
 
   // * VALIDATE FORM VALUES | THIS WILL CHECK IF THE USER FILL ALL THE REQUIRED FIELDS & ANY VALUES ARE CHANGED
@@ -96,17 +100,20 @@ const Update = ({ product }: Props) => {
   // * VALIDATE IMAGE TYPE & SETTING OF IMG INFO TO BE UPLOAD TO STORAGE
   const uploadImg = (e: ChangeEvent<HTMLInputElement>) => {
     const target = e?.target?.files?.[0];
+    const value = e?.target.value;
 
     if (!VALID_IMG_TYPES.includes(target?.type || "") || !target) {
       toast({
         variant: "destructive",
         ...notifLang.uploadImg.error,
       });
+      setImgInfo({ ...imgInfo, value: "" });
       return;
     }
     setImgInfo({
       fileName: target.name,
       file: target,
+      value,
     });
   };
 
@@ -177,6 +184,7 @@ const Update = ({ product }: Props) => {
                     name="price"
                     defaultValue={product.price}
                     max={9999}
+                    min={0}
                   />
                 </div>
                 <div className="mb-2">
@@ -190,6 +198,7 @@ const Update = ({ product }: Props) => {
                     name="cost"
                     defaultValue={product.cost}
                     max={9999}
+                    min={0}
                   />
                 </div>
                 <div className="mb-2">
@@ -203,6 +212,7 @@ const Update = ({ product }: Props) => {
                     name="stockAmount"
                     defaultValue={product.stockAmount}
                     max={9999}
+                    min={0}
                   />
                 </div>
                 <div className="mb-2">

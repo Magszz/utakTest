@@ -42,8 +42,9 @@ export interface TProduct {
 }
 
 export interface ImgInfo {
-  fileName: string;
-  file: File;
+  fileName?: string;
+  file?: File;
+  value: string;
 }
 
 export interface Filter {

@@ -25,17 +25,18 @@ const useDatabase = () => {
   const { toast } = useToast();
   const [data, setData] = useState<TProduct[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const db = getDatabase(app);
 
+  // * SAVING DATA TO DB
   const saveData = async <Data extends object>(
     location: string,
     data: Data
   ) => {
-    const db = getDatabase(app);
-    const newDocRef = push(ref(db, location));
-    const id = newDocRef.key;
+    const dbRef = push(ref(db, location));
+    const id = dbRef.key;
 
     try {
-      set(newDocRef, {
+      set(dbRef, {
         ...data,
         id,
       });
@@ -52,12 +53,12 @@ const useDatabase = () => {
     }
   };
 
+  // * FETCH DATA FROM DB
   const getData = async (
     location: string,
     filterVal: Filter = defaultFilterBy,
     sortBy: string = "default"
   ) => {
-    const db = getDatabase(app);
     let dbRef: DatabaseReference | Query = ref(db, location);
 
     // * WILL ADD QUERIES IF filterVal HAS VALUES ( SEARCH & FILTER )
@@ -72,6 +73,7 @@ const useDatabase = () => {
     try {
       onValue(dbRef, (snapshot) => {
         if (snapshot.exists()) {
+          // * WILL NOT SORT IF sortBy variable is equal to default or undefined | ""
           if (!sortBy || sortBy === "default") {
             setData(Object.values(snapshot.val()));
           } else {
@@ -96,8 +98,8 @@ const useDatabase = () => {
     }
   };
 
+  // * DELETE DATA TO DB
   const deleteData = async (location: string) => {
-    const db = getDatabase(app);
     const dbRef = ref(db, location);
 
     try {
@@ -113,11 +115,11 @@ const useDatabase = () => {
     }
   };
 
+  // * UPDATE DATA TO DB
   const updateData = async <T extends object>(
     location: string,
     data: T
   ): Promise<boolean> => {
-    const db = getDatabase(app);
     const dbRef = ref(db, location);
 
     try {

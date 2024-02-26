@@ -55,9 +55,11 @@ const Create = () => {
     const data = productForm(formRef) || formDefaultValues;
 
     if (imgInfo?.file) {
-      imgURL = await uploadImage(imgInfo.file, imgInfo.fileName);
+      imgURL = await uploadImage(imgInfo.file, imgInfo.fileName || "");
     }
 
+    // * THIS WILL CHECK IF THERE'S AN ERROR ON UPLOADING AN IMG TO STORAGE
+    // * RETURN IS HAS
     if (!imgURL && imgInfo?.file) return;
 
     const response = await saveData(DB_LOCATION.products, {
@@ -72,6 +74,8 @@ const Create = () => {
       formRef?.current.reset();
       setFormStatus({ ...formStatus, open: false, disabled: true });
     }
+
+    setFormStatus({ ...formStatus, loading: false });
   };
 
   // * VALIDATE FORM VALUES | THIS WILL CHECK IF THE USER FILL ALL THE REQUIRED FIELDS
@@ -84,17 +88,20 @@ const Create = () => {
   // * VALIDATE IMAGE TYPE & SETTING OF IMG INFO TO BE UPLOAD TO STORAGE
   const uploadImg = (e: ChangeEvent<HTMLInputElement>) => {
     const target = e?.target?.files?.[0];
+    const value = e?.target.value;
 
     if (!VALID_IMG_TYPES.includes(target?.type || "") || !target) {
       toast({
         variant: "destructive",
         ...notifLang.uploadImg.error,
       });
+      setImgInfo({ ...imgInfo, value: "" });
       return;
     }
     setImgInfo({
       fileName: target.name,
       file: target,
+      value,
     });
   };
 
@@ -166,6 +173,7 @@ const Create = () => {
                   id="price"
                   name="price"
                   max={9999}
+                  min={0}
                 />
               </div>
               <div className="mb-2">
@@ -178,6 +186,7 @@ const Create = () => {
                   id="cost"
                   name="cost"
                   max={9999}
+                  min={0}
                 />
               </div>
               <div className="mb-2">
@@ -190,6 +199,7 @@ const Create = () => {
                   id="stockAmount"
                   name="stockAmount"
                   max={9999}
+                  min={0}
                 />
               </div>
               <div className="mb-2">
@@ -221,6 +231,7 @@ const Create = () => {
                   type="file"
                   id="image"
                   name="image"
+                  value={imgInfo?.value}
                   onChange={uploadImg}
                 />
               </div>
