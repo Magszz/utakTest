@@ -23,11 +23,6 @@ const Header = () => {
           variant="endCentered"
           className="gap-2 mt-2 sm:mt-0 w-full sm:w-1/2"
         >
-          <TooltipWrapper side="left" text="Export to Excel">
-            <Button variant="outline" size="sm">
-              <Excel className="w-4" />
-            </Button>
-          </TooltipWrapper>
           <Create />
         </Flex>
       </Flex>

@@ -47,6 +47,8 @@ const App = () => {
       orderBy: "productName",
       equalTo: e.target.value.toLowerCase(),
     };
+
+    console.log({ filterBy });
     getData(DB_LOCATION.products, filterBy);
     setActiveQuery(filterBy);
   }, 250);
