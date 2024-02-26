@@ -176,6 +176,7 @@ const Update = ({ product }: Props) => {
                     id="price"
                     name="price"
                     defaultValue={product.price}
+                    max={9999}
                   />
                 </div>
                 <div className="mb-2">
@@ -188,6 +189,7 @@ const Update = ({ product }: Props) => {
                     id="cost"
                     name="cost"
                     defaultValue={product.cost}
+                    max={9999}
                   />
                 </div>
                 <div className="mb-2">
@@ -200,6 +202,7 @@ const Update = ({ product }: Props) => {
                     id="stockAmount"
                     name="stockAmount"
                     defaultValue={product.stockAmount}
+                    max={9999}
                   />
                 </div>
                 <div className="mb-2">

@@ -165,6 +165,7 @@ const Create = () => {
                   placeholder={formLang.price.placeholder}
                   id="price"
                   name="price"
+                  max={9999}
                 />
               </div>
               <div className="mb-2">
@@ -176,6 +177,7 @@ const Create = () => {
                   placeholder={formLang.cost.placeholder}
                   id="cost"
                   name="cost"
+                  max={9999}
                 />
               </div>
               <div className="mb-2">
@@ -187,6 +189,7 @@ const Create = () => {
                   placeholder={formLang.stock.placeholder}
                   id="stockAmount"
                   name="stockAmount"
+                  max={9999}
                 />
               </div>
               <div className="mb-2">
