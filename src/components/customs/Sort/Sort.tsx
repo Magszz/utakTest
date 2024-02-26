@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SORT_BY } from "@/lib/constant";
+import { containerLang } from "@/lib/lang/containerLang";
 import { SortBy } from "@/lib/typings/Typings";
 import { ArrowDownUp } from "lucide-react";
 
@@ -23,11 +24,11 @@ const Sort = ({ value, onValueChange }: Props) => {
       <DropdownMenuTrigger asChild>
         <Button variant="secondary" size="sm">
           <ArrowDownUp className="w-5 h-5 mr-2" />
-          Sort by
+          {containerLang.sort.button}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-full max-w-[400px]">
-        <DropdownMenuLabel>Product Keys</DropdownMenuLabel>
+        <DropdownMenuLabel>{containerLang.sort.label}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup value={value} onValueChange={onValueChange}>
           {SORT_BY?.map((sortBy: SortBy) => (

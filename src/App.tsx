@@ -26,6 +26,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { DB_LOCATION } from "./lib/loc/loc";
 import _ from "lodash";
 import { defaultFilterBy } from "./lib/static/defaultValues";
+import { containerLang } from "./lib/lang/containerLang";
 
 const App = () => {
   const [activeQuery, setActiveQuery] = useState<TFilter>({
@@ -79,7 +80,7 @@ const App = () => {
           <div className="w-full">
             <Search
               onChange={searchProduct}
-              placeholder="Search for a product"
+              placeholder={containerLang.search.placeholder}
               className="!w-[60%] [&>input]:placeholder:font-montserrat"
             />
           </div>
@@ -93,8 +94,7 @@ const App = () => {
         <div className="p-4 w-full">
           <Table className="w-full">
             <TableCaption className="mt-5 mb-3">
-              Browse through our extensive selection of products, where you'll
-              find a comprehensive list of all your items.
+              {containerLang.table.caption}
             </TableCaption>
             <TableHeader>
               <TableRow>

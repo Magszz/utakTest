@@ -27,6 +27,8 @@ import useDatabase from "@/hooks/useDatabase";
 import { DB_LOCATION } from "@/lib/loc/loc";
 import { toast } from "@/components/ui/use-toast";
 import { notifLang } from "@/lib/lang/notifLang";
+import { formLang } from "@/lib/lang/formLang";
+import { modalLang } from "@/lib/lang/modalLang";
 
 interface Props {
   product: TProduct;
@@ -125,7 +127,7 @@ const Update = ({ product }: Props) => {
           <DialogHeader>
             <DialogTitle className="font-archivo flex items-center gap-2 text-madison">
               <SquarePen className="w-6 text-blue-400" />
-              <span>Update Product</span>
+              <span>{modalLang.update.title}</span>
             </DialogTitle>
           </DialogHeader>
 
@@ -140,11 +142,11 @@ const Update = ({ product }: Props) => {
               <div className="w-full create_form">
                 <div className="mb-2">
                   <Label required htmlFor="productName">
-                    Product Name
+                    {formLang.name.label}
                   </Label>
                   <Input
                     type="text"
-                    placeholder="Enter product name"
+                    placeholder={formLang.name.placeholder}
                     id="productName"
                     name="productName"
                     defaultValue={product.productName}
@@ -153,12 +155,12 @@ const Update = ({ product }: Props) => {
 
                 <div className="mb-2">
                   <Label required htmlFor="category">
-                    Product Category
+                    {formLang.category.label}
                   </Label>
                   <Select
                     name="category"
                     id="category"
-                    placeholder="Select product category"
+                    placeholder={formLang.category.placeholder}
                     options={CATEGORIES}
                     defaultValue={product.category}
                   />
@@ -166,11 +168,11 @@ const Update = ({ product }: Props) => {
 
                 <div className="mb-2">
                   <Label required htmlFor="price">
-                    Product Price
+                    {formLang.price.label}
                   </Label>
                   <Input
                     type="number"
-                    placeholder="Enter product price"
+                    placeholder={formLang.price.placeholder}
                     id="price"
                     name="price"
                     defaultValue={product.price}
@@ -178,11 +180,11 @@ const Update = ({ product }: Props) => {
                 </div>
                 <div className="mb-2">
                   <Label required htmlFor="cost">
-                    Product Cost
+                    {formLang.cost.label}
                   </Label>
                   <Input
                     type="number"
-                    placeholder="Enter product cost"
+                    placeholder={formLang.cost.placeholder}
                     id="cost"
                     name="cost"
                     defaultValue={product.cost}
@@ -190,27 +192,26 @@ const Update = ({ product }: Props) => {
                 </div>
                 <div className="mb-2">
                   <Label required htmlFor="stockAmount">
-                    Amount of Stock
+                    {formLang.stock.label}
                   </Label>
                   <Input
                     type="number"
-                    placeholder="Enter amount of stock"
+                    placeholder={formLang.stock.placeholder}
                     id="stockAmount"
                     name="stockAmount"
                     defaultValue={product.stockAmount}
                   />
                 </div>
-
                 <div className="mb-2">
                   <Label required htmlFor="options">
-                    Product Options
+                    {formLang.options.label}
                   </Label>
                   <Paragraph fontSize="xs" className="mb-2">
-                    (seperate options by comma. e.g. Small, Medium, Large;{"  "}
+                    {formLang.options.note}
+                    {"  "}
                     <span className="text-red-500 font-semibold">
-                      insert N/A if not applicable
+                      {formLang.options.note2}
                     </span>
-                    )
                   </Paragraph>
                   <Input
                     type="text"
@@ -220,12 +221,13 @@ const Update = ({ product }: Props) => {
                     defaultValue={product.options}
                   />
                 </div>
-
                 <div className="mb-2">
-                  <Label htmlFor="image">Product Image</Label>
+                  <Label htmlFor="image">{formLang.image.label}</Label>
                   <Paragraph fontSize="xs" className="mb-2">
-                    (Supported types:{" "}
-                    <span className="font-semibold">PNG, JPG, JPEG</span>)
+                    {formLang.image.note}{" "}
+                    <span className="font-semibold">
+                      {formLang.image.note2}
+                    </span>
                   </Paragraph>
                   <Input
                     accept="image/jpeg, image/png, image/jpg"
@@ -241,7 +243,7 @@ const Update = ({ product }: Props) => {
               <Flex variant="endCentered" className="gap-2 mt-6">
                 <DialogClose>
                   <Button type="button" size="sm" variant="outline">
-                    Close
+                    {formLang.buttons.close}
                   </Button>
                 </DialogClose>
                 <Button
@@ -251,7 +253,7 @@ const Update = ({ product }: Props) => {
                   size="sm"
                   variant="default"
                 >
-                  Save Changes
+                  {formLang.buttons.save}
                 </Button>
               </Flex>
             </DialogFooter>

@@ -13,6 +13,7 @@ import { Trash2 } from "lucide-react";
 import useDatabase from "@/hooks/useDatabase";
 import { DB_LOCATION } from "@/lib/loc/loc";
 import { useState } from "react";
+import { modalLang } from "@/lib/lang/modalLang";
 
 interface Props {
   id: string;
@@ -39,20 +40,20 @@ const Delete = ({ id, productName }: Props) => {
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle className="font-archivo text-madison">
-              Delete {productName}
+              {modalLang.delete.title(productName)}
             </DialogTitle>
             <DialogDescription className="font-montserrat">
-              Are you sure to delete {productName}?
+              {modalLang.delete.description(productName)}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="sm:justify-end mt-2">
             <DialogClose>
               <Button type="button" variant="secondary">
-                Close
+                {modalLang.delete.buttons.close}
               </Button>
             </DialogClose>
             <Button onClick={deleteHandler} type="button" variant="destructive">
-              Delete
+              {modalLang.delete.buttons.delete}
             </Button>
           </DialogFooter>
         </DialogContent>

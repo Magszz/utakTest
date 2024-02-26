@@ -27,6 +27,8 @@ import { useToast } from "@/components/ui/use-toast";
 import { notifLang } from "@/lib/lang/notifLang";
 import useStorage from "@/hooks/useStorage";
 import useGetFormValues from "@/hooks/useGetFormValues";
+import { formLang } from "@/lib/lang/formLang";
+import { modalLang } from "@/lib/lang/modalLang";
 
 const Create = () => {
   const { toast } = useToast();
@@ -106,7 +108,7 @@ const Create = () => {
       <DialogTrigger asChild>
         <Button size="sm" type="button">
           <PlusCircle className="w-4 mr-1 text-white" />
-          <span>Add New Product</span>
+          <span>{modalLang.create.button}</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
@@ -114,10 +116,10 @@ const Create = () => {
         <DialogHeader>
           <DialogTitle className="font-archivo flex items-center gap-2 text-madison">
             <NotebookPen className="w-6 text-blue-400" />
-            <span>New Product</span>
+            <span>{modalLang.create.title}</span>
           </DialogTitle>
           <DialogDescription className="font-montserrat">
-            Complete required fields to create new product
+            {modalLang.create.description}
           </DialogDescription>
         </DialogHeader>
 
@@ -132,11 +134,11 @@ const Create = () => {
             <div className="w-full create_form">
               <div className="mb-2">
                 <Label required htmlFor="productName">
-                  Product Name
+                  {formLang.name.label}
                 </Label>
                 <Input
                   type="text"
-                  placeholder="Enter product name"
+                  placeholder={formLang.name.placeholder}
                   id="productName"
                   name="productName"
                 />
@@ -144,59 +146,59 @@ const Create = () => {
 
               <div className="mb-2">
                 <Label required htmlFor="category">
-                  Product Category
+                  {formLang.category.label}
                 </Label>
                 <Select
                   name="category"
                   id="category"
-                  placeholder="Select product category"
+                  placeholder={formLang.category.placeholder}
                   options={CATEGORIES}
                 />
               </div>
 
               <div className="mb-2">
                 <Label required htmlFor="price">
-                  Product Price
+                  {formLang.price.label}
                 </Label>
                 <Input
                   type="number"
-                  placeholder="Enter product price"
+                  placeholder={formLang.price.placeholder}
                   id="price"
                   name="price"
                 />
               </div>
               <div className="mb-2">
                 <Label required htmlFor="cost">
-                  Product Cost
+                  {formLang.cost.label}
                 </Label>
                 <Input
                   type="number"
-                  placeholder="Enter product cost"
+                  placeholder={formLang.cost.placeholder}
                   id="cost"
                   name="cost"
                 />
               </div>
               <div className="mb-2">
                 <Label required htmlFor="stockAmount">
-                  Amount of Stock
+                  {formLang.stock.label}
                 </Label>
                 <Input
                   type="number"
-                  placeholder="Enter amount of stock"
+                  placeholder={formLang.stock.placeholder}
                   id="stockAmount"
                   name="stockAmount"
                 />
               </div>
               <div className="mb-2">
                 <Label required htmlFor="options">
-                  Product Options
+                  {formLang.options.label}
                 </Label>
                 <Paragraph fontSize="xs" className="mb-2">
-                  (seperate options by comma. e.g. Small, Medium, Large;{"  "}
+                  {formLang.options.note}
+                  {"  "}
                   <span className="text-red-500 font-semibold">
-                    insert N/A if not applicable
+                    {formLang.options.note2}
                   </span>
-                  )
                 </Paragraph>
                 <Input
                   type="text"
@@ -206,10 +208,10 @@ const Create = () => {
                 />
               </div>
               <div className="mb-2">
-                <Label htmlFor="image">Product Image</Label>
+                <Label htmlFor="image">{formLang.image.label}</Label>
                 <Paragraph fontSize="xs" className="mb-2">
-                  (Supported types:{" "}
-                  <span className="font-semibold">PNG, JPG, JPEG</span>)
+                  {formLang.image.note}{" "}
+                  <span className="font-semibold">{formLang.image.note2}</span>
                 </Paragraph>
                 <Input
                   accept="image/jpeg, image/png, image/jpg"
@@ -225,7 +227,7 @@ const Create = () => {
             <Flex variant="endCentered" className="gap-2 mt-6">
               <DialogClose>
                 <Button type="button" size="sm" variant="outline">
-                  Close
+                  {formLang.buttons.close}
                 </Button>
               </DialogClose>
               <Button
@@ -235,7 +237,7 @@ const Create = () => {
                 size="sm"
                 variant="default"
               >
-                Create Product
+                {formLang.buttons.create}
               </Button>
             </Flex>
           </DialogFooter>

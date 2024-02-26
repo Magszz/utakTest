@@ -2,6 +2,7 @@ import { Create, Flex, Heading, Subheading } from "@/components";
 import { Button } from "@/components/ui/button";
 import { Excel } from "@/assets/icons";
 import { TooltipWrapper } from "@/components/ui/tooltip";
+import { containerLang } from "@/lib/lang/containerLang";
 
 const Header = () => {
   return (
@@ -10,10 +11,10 @@ const Header = () => {
         {/* Header text */}
         <div className="w-full sm:w-1/2">
           <Heading className="!text-lightBlack/85 mb-1 font-semibold" type="h3">
-            Product List
+            {containerLang.header.heading}
           </Heading>
           <Subheading className="text-gray-600" fontSize="sm">
-            Manage your products
+            {containerLang.header.subheading}
           </Subheading>
         </div>
 
