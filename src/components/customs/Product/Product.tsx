@@ -56,8 +56,8 @@ const Product = ({
       <TableCell>{price}</TableCell>
       <TableCell>{cost}</TableCell>
       <TableCell>{stockAmount}</TableCell>
-      <TableCell>{dayjs(dateCreated).format("L LT")}</TableCell>
-      <TableCell>{dayjs(lastModified).format("L LT")}</TableCell>
+      <TableCell>{dayjs(dateCreated).format("LL LT")}</TableCell>
+      <TableCell>{dayjs(lastModified).format("LL LT")}</TableCell>
       <TableCell>
         <Flex variant="startCentered" className="gap-1 flex-wrap">
           {optionList?.map((option: string, idx: number) => (
