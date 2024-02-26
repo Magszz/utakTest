@@ -31,7 +31,7 @@ const useDatabase = () => {
   const saveData = async <Data extends object>(
     location: string,
     data: Data
-  ) => {
+  ): Promise<boolean> => {
     const dbRef = push(ref(db, location));
     const id = dbRef.key;
 
