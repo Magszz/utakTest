@@ -19,6 +19,14 @@ interface Props {
 }
 
 const Filter = ({ value, onValueChange }: Props) => {
+  const CATEGORIES_WITH_DEFAULT = [
+    {
+      name: "All Items",
+      value: "all",
+    },
+    ...CATEGORIES,
+  ];
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -31,7 +39,7 @@ const Filter = ({ value, onValueChange }: Props) => {
         <DropdownMenuLabel>{containerLang.filter.label}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup value={value} onValueChange={onValueChange}>
-          {CATEGORIES?.map((category: Category) => (
+          {CATEGORIES_WITH_DEFAULT?.map((category: Category) => (
             <DropdownMenuRadioItem key={category.value} value={category.value}>
               {category.name}
             </DropdownMenuRadioItem>

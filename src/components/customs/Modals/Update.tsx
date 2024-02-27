@@ -13,10 +13,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { TooltipWrapper } from "@/components/ui/tooltip";
-import { CATEGORIES, VALID_IMG_TYPES } from "@/lib/constant";
-import { FormStatus, ImgInfo, TProduct } from "@/lib/typings/Typings";
+import { CATEGORIES, OPTIONS } from "@/lib/constant";
+import { FormStatus, TProduct } from "@/lib/typings/Typings";
 import { SquarePen } from "lucide-react";
-import { ChangeEvent, FormEvent, useRef, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import _ from "lodash";
 import useGetFormValues from "@/hooks/useGetFormValues";
 import { formDefaultValues } from "@/lib/static/defaultValues";
@@ -25,10 +25,9 @@ import dayjs from "dayjs";
 import useStorage from "@/hooks/useStorage";
 import useDatabase from "@/hooks/useDatabase";
 import { DB_LOCATION } from "@/lib/loc/loc";
-import { toast } from "@/components/ui/use-toast";
-import { notifLang } from "@/lib/lang/notifLang";
 import { formLang } from "@/lib/lang/formLang";
 import { modalLang } from "@/lib/lang/modalLang";
+import useImageUpload from "@/hooks/useImageUpload";
 
 interface Props {
   product: TProduct;
@@ -41,11 +40,11 @@ const Update = ({ product }: Props) => {
     open: false,
     disabled: true,
   });
-  const [imgInfo, setImgInfo] = useState<ImgInfo>();
 
   const { updateData } = useDatabase();
   const { productForm } = useGetFormValues();
   const { uploadImage } = useStorage();
+  const { imgInfo, uploadImg } = useImageUpload();
 
   // * SUBMIT FORM
   const formSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -82,8 +81,6 @@ const Update = ({ product }: Props) => {
   const formChange = _.debounce(() => {
     const data = productForm(formRef) || formDefaultValues;
 
-    console.log({ data });
-
     const productWithoutNotRequiredFields = _.omit(product, [
       "image",
       "id",
@@ -98,26 +95,6 @@ const Update = ({ product }: Props) => {
         (!allValuesHaveLength(data) || isFormChanged) && !!imgInfo?.fileName,
     });
   }, 250);
-
-  // * VALIDATE IMAGE TYPE & SETTING OF IMG INFO TO BE UPLOAD TO STORAGE
-  const uploadImg = (e: ChangeEvent<HTMLInputElement>) => {
-    const target = e?.target?.files?.[0];
-    const value = e?.target.value;
-
-    if (!VALID_IMG_TYPES.includes(target?.type || "") || !target) {
-      toast({
-        variant: "destructive",
-        ...notifLang.uploadImg.error,
-      });
-      setImgInfo({ ...imgInfo, value: "" });
-      return;
-    }
-    setImgInfo({
-      fileName: target.name,
-      file: target,
-      value,
-    });
-  };
 
   return (
     <TooltipWrapper text="Update" side="top">
@@ -221,19 +198,11 @@ const Update = ({ product }: Props) => {
                   <Label required htmlFor="options">
                     {formLang.options.label}
                   </Label>
-                  <Paragraph fontSize="xs" className="mb-2">
-                    {formLang.options.note}
-                    {"  "}
-                    <span className="text-red-500 font-semibold">
-                      {formLang.options.note2}
-                    </span>
-                  </Paragraph>
-                  <Input
-                    type="text"
-                    placeholder="Enter product options"
+                  <Select
                     id="options"
                     name="options"
-                    defaultValue={product.options}
+                    placeholder={formLang.options.placeholder}
+                    options={OPTIONS}
                   />
                 </div>
                 <div className="mb-2">
@@ -249,7 +218,7 @@ const Update = ({ product }: Props) => {
                     type="file"
                     id="image"
                     name="image"
-                    onChange={uploadImg}
+                    onChange={(e) => uploadImg(e, formRef)}
                   />
                 </div>
               </div>

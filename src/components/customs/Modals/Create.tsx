@@ -14,24 +14,22 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { PlusCircle, NotebookPen } from "lucide-react";
-import { ChangeEvent, FormEvent, useRef, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import _ from "lodash";
 import useDatabase from "@/hooks/useDatabase";
 import { formDefaultValues } from "@/lib/static/defaultValues";
-import { FormStatus, ImgInfo } from "@/lib/typings/Typings";
+import { FormStatus } from "@/lib/typings/Typings";
 import { allValuesHaveLength } from "@/lib/helpers/stringHelpers";
 import { DB_LOCATION } from "@/lib/loc/loc";
 import dayjs from "dayjs";
-import { CATEGORIES, VALID_IMG_TYPES } from "@/lib/constant";
-import { useToast } from "@/components/ui/use-toast";
-import { notifLang } from "@/lib/lang/notifLang";
+import { CATEGORIES, OPTIONS } from "@/lib/constant";
 import useStorage from "@/hooks/useStorage";
 import useGetFormValues from "@/hooks/useGetFormValues";
 import { formLang } from "@/lib/lang/formLang";
 import { modalLang } from "@/lib/lang/modalLang";
+import useImageUpload from "@/hooks/useImageUpload";
 
 const Create = () => {
-  const { toast } = useToast();
   const formRef = useRef<HTMLFormElement>(null);
   const [formStatus, setFormStatus] = useState<FormStatus>({
     loading: false,
@@ -39,10 +37,10 @@ const Create = () => {
     disabled: true,
   });
 
-  const [imgInfo, setImgInfo] = useState<ImgInfo>();
   const { saveData } = useDatabase();
   const { uploadImage } = useStorage();
   const { productForm } = useGetFormValues();
+  const { imgInfo, uploadImg } = useImageUpload();
 
   // * SUBMIT FORM
   const formSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -85,26 +83,6 @@ const Create = () => {
 
     setFormStatus({ ...formStatus, disabled: !allValuesHaveLength(data) });
   }, 250);
-
-  // * VALIDATE IMAGE TYPE & SETTING OF IMG INFO TO BE UPLOAD TO STORAGE
-  const uploadImg = (e: ChangeEvent<HTMLInputElement>) => {
-    const target = e?.target?.files?.[0];
-    const value = e?.target.value;
-
-    if (!VALID_IMG_TYPES.includes(target?.type || "") || !target) {
-      toast({
-        variant: "destructive",
-        ...notifLang.uploadImg.error,
-      });
-      setImgInfo({ ...imgInfo, value: "" });
-      return;
-    }
-    setImgInfo({
-      fileName: target.name,
-      file: target,
-      value,
-    });
-  };
 
   return (
     <Dialog
@@ -207,18 +185,11 @@ const Create = () => {
                 <Label required htmlFor="options">
                   {formLang.options.label}
                 </Label>
-                <Paragraph fontSize="xs" className="mb-2">
-                  {formLang.options.note}
-                  {"  "}
-                  <span className="text-red-500 font-semibold">
-                    {formLang.options.note2}
-                  </span>
-                </Paragraph>
-                <Input
-                  type="text"
-                  placeholder="Enter product options"
+                <Select
                   id="options"
                   name="options"
+                  placeholder={formLang.options.placeholder}
+                  options={OPTIONS}
                 />
               </div>
               <div className="mb-2">
@@ -232,8 +203,7 @@ const Create = () => {
                   type="file"
                   id="image"
                   name="image"
-                  value={imgInfo?.value}
-                  onChange={uploadImg}
+                  onChange={(e) => uploadImg(e, formRef)}
                 />
               </div>
             </div>

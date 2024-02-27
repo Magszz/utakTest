@@ -21,9 +21,7 @@ export const formLang = {
   },
   options: {
     label: "Product Options",
-    note: "seperate options by comma. e.g. Small, Medium, Large;",
-    note2: "insert N/A if not applicable",
-    placeholder: "Enter product options",
+    placeholder: "Select product options",
   },
   image: {
     label: "Product Image",

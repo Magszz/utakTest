@@ -1,12 +1,8 @@
-import { Category, SortBy, Column } from "./typings/Typings";
+import { Category, SortBy, Column, Options } from "./typings/Typings";
 
 export const VALID_IMG_TYPES = ["image/jpeg", "image/png", "image/jpg"];
 export const COLSPAN = 9;
 export const CATEGORIES: Category[] = [
-  {
-    name: "All Items",
-    value: "all",
-  },
   {
     name: "Salad",
     value: "salad",
@@ -92,5 +88,24 @@ export const SORT_BY: SortBy[] = [
   {
     name: "Cost",
     value: "cost",
+  },
+];
+
+export const OPTIONS: Options[] = [
+  {
+    name: "Small",
+    value: "small",
+  },
+  {
+    name: "Regular",
+    value: "regular",
+  },
+  {
+    name: "Large",
+    value: "large",
+  },
+  {
+    name: "Not applicable",
+    value: "N/A",
   },
 ];

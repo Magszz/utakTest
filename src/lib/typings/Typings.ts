@@ -4,6 +4,7 @@ export interface Category {
 }
 
 export interface SortBy extends Category {}
+export interface Options extends Category {}
 
 export interface Column {
   name: string;
@@ -42,9 +43,8 @@ export interface TProduct {
 }
 
 export interface ImgInfo {
-  fileName?: string;
-  file?: File;
-  value: string;
+  fileName: string;
+  file?: File | null;
 }
 
 export interface Filter {
