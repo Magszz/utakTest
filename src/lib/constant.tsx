@@ -59,8 +59,8 @@ export const TABLE_COLUMNS: Column[] = [
     className: "",
   },
   {
-    name: "Options",
-    className: "w-[200px]",
+    name: "Option",
+    className: "w-[100px]",
   },
   {
     name: "Actions",

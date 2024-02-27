@@ -48,7 +48,7 @@ const Delete = ({ id, productName }: Props) => {
           </DialogHeader>
           <DialogFooter className="sm:justify-end mt-2">
             <DialogClose>
-              <Button type="button" variant="secondary">
+              <Button type="button" variant="outline">
                 {modalLang.delete.buttons.close}
               </Button>
             </DialogClose>

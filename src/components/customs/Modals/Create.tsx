@@ -40,7 +40,7 @@ const Create = () => {
   const { saveData } = useDatabase();
   const { uploadImage } = useStorage();
   const { productForm } = useGetFormValues();
-  const { imgInfo, uploadImg } = useImageUpload();
+  const { imgInfo, setImgInfo, uploadImg } = useImageUpload();
 
   // * SUBMIT FORM
   const formSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -73,7 +73,7 @@ const Create = () => {
       setFormStatus({ ...formStatus, open: false, disabled: true });
       return;
     }
-
+    setImgInfo({ fileName: "", file: null });
     setFormStatus({ ...formStatus, loading: false });
   };
 

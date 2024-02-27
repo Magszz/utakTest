@@ -27,6 +27,7 @@ export interface FormStatus {
   loading: boolean;
   open: boolean;
   disabled: boolean;
+  allHasValues?: boolean;
 }
 
 export interface TProduct {

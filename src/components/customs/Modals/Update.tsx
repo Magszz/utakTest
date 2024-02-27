@@ -38,13 +38,14 @@ const Update = ({ product }: Props) => {
   const [formStatus, setFormStatus] = useState<FormStatus>({
     loading: false,
     open: false,
-    disabled: true,
+    disabled: false,
+    allHasValues: false,
   });
 
   const { updateData } = useDatabase();
   const { productForm } = useGetFormValues();
   const { uploadImage } = useStorage();
-  const { imgInfo, uploadImg } = useImageUpload();
+  const { imgInfo, setImgInfo, uploadImg } = useImageUpload();
 
   // * SUBMIT FORM
   const formSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -67,19 +68,21 @@ const Update = ({ product }: Props) => {
       ...data,
       lastModified: dateNow,
       image: imgURL || product.image,
-      category: data.category || product.category,
     });
 
     if (response) {
-      return setFormStatus({ ...formStatus, open: false, disabled: true });
+      return setFormStatus({ ...formStatus, open: false, disabled: false });
     }
 
+    setImgInfo({ fileName: "", file: null });
     setFormStatus({ ...formStatus, loading: false });
   };
 
   // * VALIDATE FORM VALUES | THIS WILL CHECK IF THE USER FILL ALL THE REQUIRED FIELDS & ANY VALUES ARE CHANGED
   const formChange = _.debounce(() => {
+    if (!formRef?.current) return;
     const data = productForm(formRef) || formDefaultValues;
+    const imageField = formRef.current.image.value;
 
     const productWithoutNotRequiredFields = _.omit(product, [
       "image",
@@ -91,8 +94,8 @@ const Update = ({ product }: Props) => {
 
     setFormStatus({
       ...formStatus,
-      disabled:
-        (!allValuesHaveLength(data) || isFormChanged) && !!imgInfo?.fileName,
+      disabled: !isFormChanged || !!imageField.length,
+      allHasValues: !allValuesHaveLength(data),
     });
   }, 250);
 
@@ -203,6 +206,7 @@ const Update = ({ product }: Props) => {
                     name="options"
                     placeholder={formLang.options.placeholder}
                     options={OPTIONS}
+                    defaultValue={product.options}
                   />
                 </div>
                 <div className="mb-2">
@@ -232,7 +236,11 @@ const Update = ({ product }: Props) => {
                 </DialogClose>
                 <Button
                   loading={formStatus.loading}
-                  disabled={formStatus.loading || formStatus.disabled}
+                  disabled={
+                    formStatus.loading ||
+                    !formStatus.disabled ||
+                    formStatus.allHasValues
+                  }
                   type="submit"
                   size="sm"
                   variant="default"

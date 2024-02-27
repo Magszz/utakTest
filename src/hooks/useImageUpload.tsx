@@ -36,6 +36,7 @@ const useImageUpload = () => {
   return {
     imgInfo,
     uploadImg,
+    setImgInfo,
   };
 };
 

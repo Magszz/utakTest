@@ -24,12 +24,12 @@ const Select = ({
   options,
   id,
   name,
-  ...props
+  defaultValue,
 }: Props) => {
-  const [value, setValue] = useState<string>("");
+  const [value, setValue] = useState<string>(defaultValue || "");
 
   return (
-    <SelectContainer onValueChange={(e) => setValue(e)} {...props}>
+    <SelectContainer value={defaultValue} onValueChange={(e) => setValue(e)}>
       <SelectTrigger value={value} name={name} id={id} className={className}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
