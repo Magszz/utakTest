@@ -68,6 +68,7 @@ const Update = ({ product }: Props) => {
       ...data,
       lastModified: dateNow,
       image: imgURL || product.image,
+      productName: data?.productName?.toLowerCase(),
     });
 
     if (response) {
