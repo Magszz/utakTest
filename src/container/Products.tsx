@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  Header,
   Flex,
   Search,
   Filter,
@@ -9,6 +8,10 @@ import {
   Empty,
   Loading,
   Sort,
+  Tracker,
+  Create,
+  Heading,
+  Subheading,
 } from "@/components";
 import {
   TableCaption,
@@ -35,14 +38,14 @@ const Products = () => {
   });
   const [filter, setFilter] = useState("all");
   const [sort, setSort] = useState<string>("default");
-  const { data, getData, loading } = useDatabase();
+  const { products, getData, loading } = useDatabase();
 
   // * GET DATA FROM DB
   useEffect(() => {
     getData(DB_LOCATION.products);
   }, []);
 
-  // * SEARCH FOR PRODUCT
+  // * SEARCH FOR PRODUCT (MUST MATCH)
   const searchProduct = _.debounce((e: ChangeEvent<HTMLInputElement>) => {
     const filterBy = {
       orderBy: "productName",
@@ -73,12 +76,23 @@ const Products = () => {
 
   return (
     <div className="w-full px-8 py-4 relative">
-      {/* HEADER */}
-      <Header />
+      {/* TOTAL STOCKS / SALES / INVESMENT OVERVIEW */}
+      <Tracker products={products} />
 
+      {/* TABLE HEADER */}
       <div className="mx-4 mt-2 border rounded-md">
+        {/* Header text */}
+        <div className="w-full sm:w-1/2 px-4 py-2 pt-4">
+          <Heading className="!text-lightBlack/85 mb-1 font-semibold" type="h3">
+            {containerLang.productList.header.heading}
+          </Heading>
+          <Subheading className="text-gray-600" fontSize="sm">
+            {containerLang.productList.header.subheading}
+          </Subheading>
+        </div>
+
         {/* Filter / Sort / Search */}
-        <Grid className="py-8 px-4 border-b gap-4 justify-items-end">
+        <Grid className="p-4 pb-6 border-b gap-4 justify-items-end">
           <div className="w-full">
             <Search
               onChange={searchProduct}
@@ -87,8 +101,9 @@ const Products = () => {
             />
           </div>
           <Flex variant="centered" className="gap-2 w-fit">
-            <Sort value={sort} onValueChange={sortProducts} />
             <Filter value={filter} onValueChange={filterCategory} />
+            <Sort value={sort} onValueChange={sortProducts} />
+            <Create />
           </Flex>
         </Grid>
 
@@ -112,10 +127,10 @@ const Products = () => {
                 <Loading />
               ) : (
                 <>
-                  {!data.length ? (
+                  {!products.length ? (
                     <Empty />
                   ) : (
-                    data?.map((product: TProduct, ind: number) => (
+                    products?.map((product: TProduct, ind: number) => (
                       <Product {...product} key={`product-${ind}`} />
                     ))
                   )}
@@ -125,6 +140,7 @@ const Products = () => {
           </Table>
         </div>
       </div>
+      {/* NOTIFICATION CONTAINER */}
       <Toaster />
     </div>
   );

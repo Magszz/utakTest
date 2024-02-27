@@ -14,7 +14,7 @@ import {
   Query,
   DatabaseReference,
 } from "firebase/database";
-import { app } from "@/lib/firebase/firebase";
+import { app } from "@/lib/config/firebase";
 import { notifLang } from "@/lib/lang/notifLang";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
@@ -23,7 +23,7 @@ import { defaultFilterBy } from "@/lib/static/defaultValues";
 
 const useDatabase = () => {
   const { toast } = useToast();
-  const [data, setData] = useState<TProduct[]>([]);
+  const [products, setProducts] = useState<TProduct[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const db = getDatabase(app);
 
@@ -75,17 +75,17 @@ const useDatabase = () => {
         if (snapshot.exists()) {
           // * WILL NOT SORT IF sortBy variable is equal to default or undefined | ""
           if (!sortBy || sortBy === "default") {
-            setData(Object.values(snapshot.val()));
+            setProducts(Object.values(snapshot.val()));
           } else {
             const arrData: TProduct[] = Object.values(snapshot.val());
             const sortedData: TProduct[] = arrData.sort((a, b) =>
               a[sortBy as Sort]?.localeCompare(b[sortBy as Sort])
             );
 
-            setData(sortedData);
+            setProducts(sortedData);
           }
         } else {
-          setData([]);
+          setProducts([]);
         }
         setLoading(false);
       });
@@ -137,7 +137,7 @@ const useDatabase = () => {
     }
   };
 
-  return { saveData, data, getData, loading, deleteData, updateData };
+  return { saveData, products, getData, loading, deleteData, updateData };
 };
 
 export default useDatabase;

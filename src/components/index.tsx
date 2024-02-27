@@ -7,8 +7,8 @@ export { default as Paragraph } from "./customs/Typography/Paragraph";
 export { default as Flex } from "./customs/Layouts/Flex";
 export { default as Grid } from "./customs/Layouts/Grid";
 
-// * HEADER
-export { default as Header } from "./customs/Header/Header";
+// * TRACKER
+export { default as Tracker } from "./customs/Tracker/Tracker";
 
 // * Category
 export { default as Category } from "./customs/Category/Category";
@@ -31,3 +31,6 @@ export { default as Sort } from "./customs/Sort/Sort";
 // * EMPTY & LOADING
 export { default as Empty } from "./customs/Empty/Empty";
 export { default as Loading } from "./customs/Loading/Loading";
+
+// * CARD
+export { default as Card } from "./customs/Card/Card";

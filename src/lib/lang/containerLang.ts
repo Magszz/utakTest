@@ -1,7 +1,15 @@
 export const containerLang = {
-  header: {
-    heading: "Product List",
-    subheading: "Manage your products",
+  productList: {
+    header: {
+      heading: "Product List",
+      subheading: "Manage your products",
+    },
+  },
+  tracker: {
+    header: {
+      heading: "Sales Overview",
+      subheading: "Discover your store's sales performance",
+    },
   },
   table: {
     caption: `Browse through our extensive selection of products, where you'll find a comprehensive list of all your items.`,

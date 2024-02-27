@@ -53,4 +53,10 @@ export interface Filter {
   equalTo: string;
 }
 
+export interface Sales {
+  price: number;
+  investment: number;
+  stocks: number;
+}
+
 export type Sort = "productName" | "category" | "price" | "cost";
