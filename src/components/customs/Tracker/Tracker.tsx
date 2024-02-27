@@ -50,15 +50,19 @@ const Tracker = ({ products }: Props) => {
         </Subheading>
       </div>
       <Grid className="w-full gap-4  mb-4">
-        <Card name="stocks" title="Total Stocks" total={total.stocks} />
+        <Card
+          name="stocks"
+          title={containerLang.tracker.stocks}
+          total={total.stocks}
+        />
         <Card
           name="sales"
-          title="Expected Sales"
+          title={containerLang.tracker.sales}
           total={(total.price - total.investment) * total.stocks}
         />
         <Card
           name="investments"
-          title="Total investments"
+          title={containerLang.tracker.investment}
           total={total.investment}
         />
       </Grid>

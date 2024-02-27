@@ -10,6 +10,9 @@ export const containerLang = {
       heading: "Sales Overview",
       subheading: "Discover your store's sales performance",
     },
+    stocks: "Total Stocks",
+    sales: "Expected Sales",
+    investment: "Total Investments",
   },
   table: {
     caption: `Browse through our extensive selection of products, where you'll find a comprehensive list of all your items.`,
