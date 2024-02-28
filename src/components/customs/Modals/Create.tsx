@@ -116,7 +116,7 @@ const Create = () => {
           className="h-full"
           onSubmit={formSubmit}
         >
-          <ScrollArea className="h-full max-h-[65vh] pr-3">
+          <ScrollArea className="h-[90%] max-h-[65vh] pr-3">
             <div className="w-full create_form">
               <div className="mb-2">
                 <Label required htmlFor="productName">
