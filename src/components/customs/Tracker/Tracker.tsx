@@ -34,8 +34,7 @@ const Tracker = ({ products }: Props) => {
   };
 
   useEffect(() => {
-    const compute = computeSales();
-    return () => compute;
+    computeSales();
   }, [products]);
 
   return (
