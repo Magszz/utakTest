@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { TooltipWrapper } from "@/components/ui/tooltip";
-import { CATEGORIES, OPTIONS } from "@/lib/constant";
+import { CATEGORIES } from "@/lib/constant";
 import { FormStatus, TProduct } from "@/lib/typings/Typings";
 import { SquarePen } from "lucide-react";
 import { FormEvent, useRef, useState } from "react";
@@ -166,7 +166,7 @@ const Update = ({ product }: Props) => {
                     id="price"
                     name="price"
                     defaultValue={product.price}
-                    max={9999}
+                    maxLength={255}
                     min={0}
                   />
                 </div>
@@ -180,7 +180,7 @@ const Update = ({ product }: Props) => {
                     id="cost"
                     name="cost"
                     defaultValue={product.cost}
-                    max={9999}
+                    maxLength={255}
                     min={0}
                   />
                 </div>
@@ -194,7 +194,7 @@ const Update = ({ product }: Props) => {
                     id="stockAmount"
                     name="stockAmount"
                     defaultValue={product.stockAmount}
-                    max={9999}
+                    maxLength={255}
                     min={0}
                   />
                 </div>
@@ -202,11 +202,18 @@ const Update = ({ product }: Props) => {
                   <Label required htmlFor="options">
                     {formLang.options.label}
                   </Label>
-                  <Select
+                  <Paragraph fontSize="xs" className="mb-2">
+                    {formLang.options.note}
+                    {"  "}
+                    <span className="text-red-500 font-semibold">
+                      {formLang.options.note2}
+                    </span>
+                  </Paragraph>
+                  <Input
+                    type="text"
+                    placeholder="Enter product options"
                     id="options"
                     name="options"
-                    placeholder={formLang.options.placeholder}
-                    options={OPTIONS}
                     defaultValue={product.options}
                   />
                 </div>

@@ -22,7 +22,7 @@ import { FormStatus } from "@/lib/typings/Typings";
 import { allValuesHaveLength } from "@/lib/helpers/stringHelpers";
 import { DB_LOCATION } from "@/lib/loc/loc";
 import dayjs from "dayjs";
-import { CATEGORIES, OPTIONS } from "@/lib/constant";
+import { CATEGORIES } from "@/lib/constant";
 import useStorage from "@/hooks/useStorage";
 import useGetFormValues from "@/hooks/useGetFormValues";
 import { formLang } from "@/lib/lang/formLang";
@@ -185,11 +185,18 @@ const Create = () => {
                 <Label required htmlFor="options">
                   {formLang.options.label}
                 </Label>
-                <Select
+                <Paragraph fontSize="xs" className="mb-2">
+                  {formLang.options.note}
+                  {"  "}
+                  <span className="text-red-500 font-semibold">
+                    {formLang.options.note2}
+                  </span>
+                </Paragraph>
+                <Input
+                  type="text"
+                  placeholder="Enter product options"
                   id="options"
                   name="options"
-                  placeholder={formLang.options.placeholder}
-                  options={OPTIONS}
                 />
               </div>
               <div className="mb-2">
