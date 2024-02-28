@@ -16,7 +16,7 @@ const Tracker = ({ products }: Props) => {
   });
 
   //   * COMPUTE FOR TOTAL INVESTMENT, STOCKS & EXPECTED SALES
-  // ? FORMULA FOR EXPECTED SALES (TOTAL INVESTMENT - TOTAL PRODUCTS PRICE) * STOCKS
+  // ? FORMULA FOR EXPECTED SALES (TOTAL PRODUCTS PRICE - TOTAL INVESTMENT) * STOCKS
   const computeSales = () => {
     const totalSales: Sales = {
       price: 0,
@@ -57,7 +57,7 @@ const Tracker = ({ products }: Props) => {
         <Card
           name="sales"
           title={containerLang.tracker.sales}
-          total={(total.investment - total.price) * total.stocks}
+          total={(total.price - total.investment) * total.stocks}
         />
         <Card
           name="investments"
