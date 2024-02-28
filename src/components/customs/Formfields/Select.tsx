@@ -29,7 +29,10 @@ const Select = ({
   const [value, setValue] = useState<string>(defaultValue || "");
 
   return (
-    <SelectContainer value={defaultValue} onValueChange={(e) => setValue(e)}>
+    <SelectContainer
+      defaultValue={defaultValue}
+      onValueChange={(e) => setValue(e)}
+    >
       <SelectTrigger value={value} name={name} id={id} className={className}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
