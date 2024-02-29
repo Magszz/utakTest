@@ -61,7 +61,7 @@ const Update = ({ product }: Props) => {
     }
 
     // * THIS WILL CHECK IF THERE'S AN ERROR ON UPLOADING AN IMG TO STORAGE
-    // * RETURN IS HAS
+    // * RETURN IF HAS
     if (!imgURL && imgInfo?.file) return;
 
     const response = await updateData(`${DB_LOCATION.products}/${product.id}`, {
