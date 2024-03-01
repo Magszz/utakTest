@@ -10,9 +10,6 @@ export { default as Grid } from "./customs/Layouts/Grid";
 // * TRACKER
 export { default as Tracker } from "./customs/Tracker/Tracker";
 
-// * Category
-export { default as Category } from "./customs/Category/Category";
-
 //  * PRODUCT
 export { default as Product } from "./customs/Product/Product";
 
@@ -20,7 +17,6 @@ export { default as Product } from "./customs/Product/Product";
 export { default as Delete } from "./customs/Modals/Delete";
 export { default as Update } from "./customs/Modals/Update";
 export { default as Create } from "./customs/Modals/Create";
-export { default as Alert } from "./customs/Alert/Alert";
 
 // * FORM FIELDS
 export { default as Search } from "./customs/Formfields/Search";
