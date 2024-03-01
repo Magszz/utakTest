@@ -37,11 +37,13 @@ const Product = ({
       <TableCell title={productName?.toUpperCase()}>
         <Flex className="gap-6 w-full" variant="startCentered">
           {image ? (
-            <img
-              src={image}
-              alt="Product Image"
-              className="w-12 h-12 object-cover rounded-full"
-            />
+            <div className="w-16 h-12">
+              <img
+                src={image}
+                alt="Product Image"
+                className="w-full h-full object-cover rounded-full"
+              />
+            </div>
           ) : (
             <div className="rounded-full">
               <Box className="w-12 h-12 fill-primary" />

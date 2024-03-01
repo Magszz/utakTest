@@ -45,7 +45,7 @@ const Update = ({ product }: Props) => {
   const { updateData } = useDatabase();
   const { productForm } = useGetFormValues();
   const { uploadImage } = useStorage();
-  const { imgInfo, setImgInfo, uploadImg } = useImageUpload();
+  const { imgInfo, setImgInfo, uploadToImgInput } = useImageUpload();
 
   // * SUBMIT FORM
   const formSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -230,7 +230,7 @@ const Update = ({ product }: Props) => {
                     type="file"
                     id="image"
                     name="image"
-                    onChange={(e) => uploadImg(e, formRef)}
+                    onChange={(e) => uploadToImgInput(e, formRef)}
                   />
                 </div>
               </div>

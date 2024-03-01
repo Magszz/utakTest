@@ -8,7 +8,7 @@ const useImageUpload = () => {
   const [imgInfo, setImgInfo] = useState<ImgInfo>();
 
   // * VALIDATE IMAGE TYPE & SETTING OF IMG INFO TO BE UPLOAD TO STORAGE
-  const uploadImg = (
+  const uploadToImgInput = (
     e: ChangeEvent<HTMLInputElement>,
     formRef: RefObject<HTMLFormElement>
   ) => {
@@ -35,7 +35,7 @@ const useImageUpload = () => {
 
   return {
     imgInfo,
-    uploadImg,
+    uploadToImgInput,
     setImgInfo,
   };
 };

@@ -40,7 +40,7 @@ const Create = () => {
   const { saveData } = useDatabase();
   const { uploadImage } = useStorage();
   const { productForm } = useGetFormValues();
-  const { imgInfo, setImgInfo, uploadImg } = useImageUpload();
+  const { imgInfo, setImgInfo, uploadToImgInput } = useImageUpload();
 
   // * SUBMIT FORM
   const formSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -210,7 +210,7 @@ const Create = () => {
                   type="file"
                   id="image"
                   name="image"
-                  onChange={(e) => uploadImg(e, formRef)}
+                  onChange={(e) => uploadToImgInput(e, formRef)}
                 />
               </div>
             </div>
